@@ -1,0 +1,124 @@
+openapi: 3.0.1
+info:
+  title: Robot industry - Sensores
+  description: Esta aplicación ha sido desarrollada para explotar la información de sensores presente el robot de nuestra empresa
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: nanana@hotmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+
+tags:
+- name: Sensores
+  description: Información relacionada con los Sensores
+  
+paths:
+  /getHistoricalMeassuresBySensorAndType/{sensor}//{start}/{end}:
+    get:
+      tags:
+      - Sensores
+      summary: Obtener la última medición de un sensor
+      description: Recuperar la última medición de un sensor
+      operationId: getHistoricalMeassuresBySensorAndType
+      parameters:
+        - name: "sensor"
+          in: "path"
+          description: "ID del sensor"
+          required: true
+          schema:
+            type: string
+        - name: "start"
+          in: "path"
+          description: "Fecha de inicio miliseconds"
+          required: true
+          schema:
+            type: string
+        - name: "end"
+          in: "path"
+          description: "Fecha de fin miliseconds"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Medicion encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meassure'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: swagger_server.controllers.sensores_controller
+  /getLastMeassureBySensor/{sensor}:
+    get:
+      tags:
+      - Sensores
+      summary: Obtener la última medición de un sensor
+      description: Recuperar la última medición de un sensor
+      operationId: getLastMeassureBySensor
+      parameters:
+        - name: "sensor"
+          in: "path"
+          description: "ID del sensor"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Medicion encontrada
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                    $ref: '#/components/schemas/Meassure'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: swagger_server.controllers.sensores_controller
+components:
+  schemas:
+    Meassure:
+      type: object
+      required:
+      - "code"
+      - "fechamuestreo"
+      - "unidad"
+      - "tipo"
+      - "medicion"
+      properties:
+        code:
+          type: "string"
+        fechamuestreo:
+          type: "string"
+        unidad:
+          type: "string"
+        tipo:
+          type: "string"
+        medicion:
+          type: "number"
+    Message:
+      type: object
+      required:
+      - "code"
+      - "message"
+      properties:
+        code:
+          type: "string"
+        message:
+          type: "string"
