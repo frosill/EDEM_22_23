@@ -1,11 +1,8 @@
-# EDEM2022
+# EDEM2 22/23 - Master en Data Analytics
 
 ![N|Solid](https://avfcv.com/wp-content/uploads/2020/11/edem.png)
-# Francisco Rosillo Díez
-# ¡Bienvenido!
-## _Máster Data Analytics EDEM_
 
-Curso 2022-2023
+# Welcome!
 
+Hi, my name is Fran and I will be updating this repository with the contents learned in Data Analytics Master at EDEM.
 
-En este repsoitorio se irán colgando los trabajos realizados en el master de data
