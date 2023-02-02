@@ -5,8 +5,8 @@ RUN mkdir -p ${WORKDIR}
 WORKDIR ${WORKDIR}
 
 COPY requirements.txt .
-COPY ../edem_dataflow_streaming_sol.py .
-COPY ../schema/*.json schema/
+COPY edem_dataflow_streaming_sol.py .
+COPY bq_schema.json schema/
 
 # Do not include `apache-beam` in requirements.txt
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="${WORKDIR}/requirements.txt"
