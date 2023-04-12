@@ -1,0 +1,75 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:latest
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: admin
+    ports:
+      - "6033:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 6033
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+    depends_on:
+      - db
+
+  python:
+    build: ./python
+    container_name: python_db
+    volumes:
+      - dbdata:/datos/
+    links:
+      - db
+    networks:
+      - mysql
+
+  grafana:
+    image: grafana/grafana:7.5.7
+    environment:
+      - GF_DATABASE_HOST=db:6033
+      - GF_DATABASE_NAME= app_db
+      - GF_DATABASE_USER= db_user
+      - GF_DATABASE_PASSWORD= admin
+      - GF_DATABASE_TYPE= mysql
+      - GF_DATABASE_MAX_OPEN_CONN= 300
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - grafana-data:/var/lib/grafana
+
+    depends_on: 
+      - db
+
+    networks:
+      - mysql
+
+volumes:
+  dbdata:
+  grafana-data:
+
+networks:
+  mysql:
+    external: false
+    name: mysql
+    driver: bridge
+
