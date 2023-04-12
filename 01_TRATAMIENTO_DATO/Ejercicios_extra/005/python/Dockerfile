@@ -5,8 +5,6 @@ COPY requirements.txt /app/
 
 WORKDIR /app
 
-RUN apt-get update
-
 RUN pip install mysql-connector-python
 
 CMD ["python3", "main.py"]
