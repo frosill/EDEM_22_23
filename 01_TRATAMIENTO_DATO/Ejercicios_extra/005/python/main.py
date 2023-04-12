@@ -5,7 +5,7 @@ def insert_data(table_name, data):
 
     try:
         connection = mysql.connector.connect(
-            host='172.23.0.2',
+            host='172.28.182.136',
             port=6033,
             user="db_user",
             password="admin",
@@ -51,7 +51,7 @@ time.sleep(20) # Wait 20 seconds to ensure db is running
 store_data = {
     "store_id" : 1456,
     "name" : "Walmart",
-    "city_id" : 783,
+    "city_id" : 7833,
 }
 
 insert_data("store", store_data)
