@@ -2,13 +2,11 @@ import mysql.connector
 import time
 import socket
 
-ip = socket.gethostbyname(socket.gethostname())
-
 def insert_data(table_name, data):
 
     try:
         connection = mysql.connector.connect(
-            host=ip, #mi IP
+            host='localhost',
             port=6033,
             user="db_user",
             password="admin",
